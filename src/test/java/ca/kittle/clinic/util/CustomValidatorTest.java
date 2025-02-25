@@ -46,4 +46,20 @@ public class CustomValidatorTest {
         // l (lower case L) in place of a 1
         assertFalse(CustomValidator.isValidPhoneNumber("416-555-111l"));
     }
+
+    @Test
+    @DisplayName("Test valid email")
+    void testValidEmail() {
+        assert CustomValidator.isValidEmail("clinic@email.com");
+        assert CustomValidator.isValidEmail("clinic@email.a");
+        assert CustomValidator.isValidEmail("clinic@e.a");
+    }
+
+    @Test
+    @DisplayName("Test phone number with no @ sign")
+    void testEmailWithoutAt() {
+        assertFalse(CustomValidator.isValidEmail("clinicATemail.com"));
+        assertFalse(CustomValidator.isValidEmail("clinic[at]email.com"));
+        assertFalse(CustomValidator.isValidEmail("clinic [ at ] email.com"));
+    }
 }
