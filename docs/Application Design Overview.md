@@ -4,7 +4,7 @@
 
 ### Entities
 **Appointment**  
-Represents a patient's meeting with a practitioner.
+Represents a patient's meeting with a practitioner for consultation or care.
 
 **Booking**  
 Time and date for an appointment between a specific patient and practitioner.
