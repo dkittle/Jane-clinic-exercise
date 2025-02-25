@@ -26,7 +26,7 @@ Goal of this exercise is to evaluate your coding style, code design skills, code
 Design and implement the core components of an on-line scheduling application for a physiotherapy clinic.
 
 - [ ] The clinic is open from 9am until 5pm.
-- [ ] The clinic offers three types of appointments:
+- [x] The clinic offers three types of appointments:
   - [x] a 90 minutes initial consultation, 
   - [x] standard 60 minute appointments and,
   - [x] 30 minute check-ins.

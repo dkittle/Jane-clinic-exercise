@@ -25,12 +25,58 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should be able to create a booking with valid data")
-    void shouldCreateBookingWithValidData() {
+    @DisplayName("Should be able to create a booking with valid consultation appointment data")
+    void shouldCreateBookingWithValidConsultationAppointmentData() {
+        UUID id = UUID.randomUUID();
+        Patient patient = patients.get(0);
+        Practitioner practitioner = TestPractitioner.CHERIA;
+        Appointment.AppointmentType type = Appointment.AppointmentType.CONSULTATION;
+        LocalDateTime now = LocalDateTime.now();
+        Booking booking = new Booking(type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        assertEquals(type, booking.getAppointmentType());
+        assertEquals(now.toLocalDate(), booking.getDate());
+        assertEquals(now.toLocalTime(), booking.getStartTime());
+        assertEquals(patient, booking.getPatient());
+        assertEquals(practitioner, booking.getPractitioner());
+        Booking bookingWithId = new Booking(id, type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        assertEquals(id, bookingWithId.getId());
+        assertEquals(type, bookingWithId.getAppointmentType());
+        assertEquals(now.toLocalDate(), bookingWithId.getDate());
+        assertEquals(now.toLocalTime(), bookingWithId.getStartTime());
+        assertEquals(patient, bookingWithId.getPatient());
+        assertEquals(practitioner, bookingWithId.getPractitioner());
+    }
+
+    @Test
+    @DisplayName("Should be able to create a booking with valid standard appointment data")
+    void shouldCreateBookingWithValidStandardAppointmentData() {
         UUID id = UUID.randomUUID();
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        LocalDateTime now = LocalDateTime.now();
+        Booking booking = new Booking(type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        assertEquals(type, booking.getAppointmentType());
+        assertEquals(now.toLocalDate(), booking.getDate());
+        assertEquals(now.toLocalTime(), booking.getStartTime());
+        assertEquals(patient, booking.getPatient());
+        assertEquals(practitioner, booking.getPractitioner());
+        Booking bookingWithId = new Booking(id, type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        assertEquals(id, bookingWithId.getId());
+        assertEquals(type, bookingWithId.getAppointmentType());
+        assertEquals(now.toLocalDate(), bookingWithId.getDate());
+        assertEquals(now.toLocalTime(), bookingWithId.getStartTime());
+        assertEquals(patient, bookingWithId.getPatient());
+        assertEquals(practitioner, bookingWithId.getPractitioner());
+    }
+
+    @Test
+    @DisplayName("Should be able to create a booking with valid check-in appointment data")
+    void shouldCreateBookingWithValidCheckInAppointmentData() {
+        UUID id = UUID.randomUUID();
+        Patient patient = patients.get(0);
+        Practitioner practitioner = TestPractitioner.CHERIA;
+        Appointment.AppointmentType type = Appointment.AppointmentType.CHECK_IN;
         LocalDateTime now = LocalDateTime.now();
         Booking booking = new Booking(type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
         assertEquals(type, booking.getAppointmentType());

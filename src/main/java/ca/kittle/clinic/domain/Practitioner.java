@@ -1,5 +1,6 @@
 package ca.kittle.clinic.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import util.CustomValidator;
 
