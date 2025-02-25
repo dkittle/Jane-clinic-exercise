@@ -8,7 +8,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PatientTest {
+class PractitionerTest {
 
     private static final String FIRST_NAME = "John";
     private static final String LAST_NAME = "Doe";
@@ -16,27 +16,27 @@ class PatientTest {
     private static final String EMAIL = "john.doe@email.com";
 
     @Test
-    @DisplayName("Should be able to create a patient with valid data")
-    void shouldCreatePatientWithValidData() {
-        Patient patient = new Patient(FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL);
+    @DisplayName("Should be able to create a practitioner with valid data")
+    void shouldCreatePractitionerWithValidData() {
+        Practitioner practitioner = new Practitioner(FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL);
 
-        assertEquals(FIRST_NAME, patient.getFirstName());
-        assertEquals(LAST_NAME, patient.getLastName());
-        assertEquals(PHONE_NUMBER, patient.getPhoneNumber());
-        assertEquals(EMAIL, patient.getEmail());
+        assertEquals(FIRST_NAME, practitioner.getFirstName());
+        assertEquals(LAST_NAME, practitioner.getLastName());
+        assertEquals(PHONE_NUMBER, practitioner.getPhoneNumber());
+        assertEquals(EMAIL, practitioner.getEmail());
     }
 
     @Test
-    @DisplayName("Should be able to create a patient with valid data and specific ID")
-    void shouldCreatePatientWithValidDataAndId() {
+    @DisplayName("Should be able to create a practitioner with valid data and specific ID")
+    void shouldCreatePractitionerWithValidDataAndId() {
         UUID id = UUID.randomUUID();
-        Patient patient = new Patient(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL);
+        Practitioner practitioner = new Practitioner(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL);
 
-        assertEquals(id, patient.getId());
-        assertEquals(FIRST_NAME, patient.getFirstName());
-        assertEquals(LAST_NAME, patient.getLastName());
-        assertEquals(PHONE_NUMBER, patient.getPhoneNumber());
-        assertEquals(EMAIL, patient.getEmail());
+        assertEquals(id, practitioner.getId());
+        assertEquals(FIRST_NAME, practitioner.getFirstName());
+        assertEquals(LAST_NAME, practitioner.getLastName());
+        assertEquals(PHONE_NUMBER, practitioner.getPhoneNumber());
+        assertEquals(EMAIL, practitioner.getEmail());
     }
 
     @Test
@@ -44,9 +44,9 @@ class PatientTest {
     void shouldThrowExceptionWhenFirstNameIsNull() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(null, LAST_NAME, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(null, LAST_NAME, PHONE_NUMBER, EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, null, LAST_NAME, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(id, null, LAST_NAME, PHONE_NUMBER, EMAIL));
     }
 
     @Test
@@ -54,9 +54,9 @@ class PatientTest {
     void shouldThrowExceptionWhenFirstNameIsBlank() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient("  ", LAST_NAME, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner("  ", LAST_NAME, PHONE_NUMBER, EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, "  ", LAST_NAME, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(id, "  ", LAST_NAME, PHONE_NUMBER, EMAIL));
     }
 
     @Test
@@ -64,9 +64,9 @@ class PatientTest {
     void shouldThrowExceptionWhenLastNameIsNull() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, null, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(FIRST_NAME, null, PHONE_NUMBER, EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, null, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(id, FIRST_NAME, null, PHONE_NUMBER, EMAIL));
     }
 
     @Test
@@ -74,9 +74,9 @@ class PatientTest {
     void shouldThrowExceptionWhenLastNameIsBlank() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, "  ", PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(FIRST_NAME, "  ", PHONE_NUMBER, EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, "  ", PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(id, FIRST_NAME, "  ", PHONE_NUMBER, EMAIL));
     }
 
     // TODO Candidate for parameterized test
@@ -85,9 +85,9 @@ class PatientTest {
     void shouldThrowExceptionWhenPhoneNumberIsNull() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, LAST_NAME, null, EMAIL));
+                () -> new Practitioner(FIRST_NAME, LAST_NAME, null, EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, LAST_NAME, null, EMAIL));
+                () -> new Practitioner(id, FIRST_NAME, LAST_NAME, null, EMAIL));
     }
 
     @Test
@@ -95,9 +95,9 @@ class PatientTest {
     void shouldThrowExceptionWhenPhoneNumberIsBlank() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, LAST_NAME, "  ", EMAIL));
+                () -> new Practitioner(FIRST_NAME, LAST_NAME, "  ", EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, LAST_NAME, "  ", EMAIL));
+                () -> new Practitioner(id, FIRST_NAME, LAST_NAME, "  ", EMAIL));
     }
 
     @Test
@@ -105,9 +105,9 @@ class PatientTest {
     void shouldThrowExceptionWhenPhoneNumberIsInvalid() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, LAST_NAME, "123-456-789", EMAIL));
+                () -> new Practitioner(FIRST_NAME, LAST_NAME, "123-456-789", EMAIL));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, LAST_NAME, "123-456-789", EMAIL));
+                () -> new Practitioner(id, FIRST_NAME, LAST_NAME, "123-456-789", EMAIL));
     }
 
     // TODO Candidate for parameterized test
@@ -116,9 +116,9 @@ class PatientTest {
     void shouldThrowExceptionWhenEmailIsNull() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, LAST_NAME, PHONE_NUMBER, null));
+                () -> new Practitioner(FIRST_NAME, LAST_NAME, PHONE_NUMBER, null));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, null));
+                () -> new Practitioner(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, null));
     }
 
     @Test
@@ -126,9 +126,9 @@ class PatientTest {
     void shouldThrowExceptionWhenEmailIsBlank() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, LAST_NAME, PHONE_NUMBER, "  "));
+                () -> new Practitioner(FIRST_NAME, LAST_NAME, PHONE_NUMBER, "  "));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, "  "));
+                () -> new Practitioner(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, "  "));
     }
 
     @Test
@@ -136,16 +136,16 @@ class PatientTest {
     void shouldThrowExceptionWhenEmailIsInvalid() {
         UUID id = UUID.randomUUID();
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(FIRST_NAME, LAST_NAME, PHONE_NUMBER, "invalid-email"));
+                () -> new Practitioner(FIRST_NAME, LAST_NAME, PHONE_NUMBER, "invalid-email"));
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, "invalid-email"));
+                () -> new Practitioner(id, FIRST_NAME, LAST_NAME, PHONE_NUMBER, "invalid-email"));
     }
 
     @Test
     @DisplayName("Should throw exception when ID is null in repository constructor")
     void shouldThrowExceptionWhenIdIsNull() {
         assertThrows(IllegalArgumentException.class,
-                () -> new Patient(null, FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL));
+                () -> new Practitioner(null, FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL));
     }
 
 }
