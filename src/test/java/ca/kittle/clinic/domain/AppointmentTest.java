@@ -38,7 +38,6 @@ class AppointmentTest {
                         now.toLocalTime(),
                         patient,
                         practitioner);
-        assertEquals(Appointment.AppointmentType.CONSULTATION, appointment.getType());
         assertEquals(now.toLocalDate(), appointment.getDate());
         assertEquals(now.toLocalTime(), appointment.getStartTime());
         assertEquals(patient, appointment.getPatient());
@@ -55,7 +54,6 @@ class AppointmentTest {
                         patient,
                         practitioner);
         assertEquals(id, appointmentWithId.getId());
-        assertEquals(Appointment.AppointmentType.CONSULTATION, appointmentWithId.getType());
         assertEquals(now.toLocalDate(), appointmentWithId.getDate());
         assertEquals(now.toLocalTime(), appointmentWithId.getStartTime());
         assertEquals(patient, appointmentWithId.getPatient());
@@ -79,7 +77,6 @@ class AppointmentTest {
                         now.toLocalTime(),
                         patient,
                         practitioner);
-        assertEquals(Appointment.AppointmentType.STANDARD, appointment.getType());
         assertEquals(now.toLocalDate(), appointment.getDate());
         assertEquals(now.toLocalTime(), appointment.getStartTime());
         assertEquals(patient, appointment.getPatient());
@@ -96,7 +93,6 @@ class AppointmentTest {
                         patient,
                         practitioner);
         assertEquals(id, appointmentWithId.getId());
-        assertEquals(Appointment.AppointmentType.STANDARD, appointmentWithId.getType());
         assertEquals(now.toLocalDate(), appointmentWithId.getDate());
         assertEquals(now.toLocalTime(), appointmentWithId.getStartTime());
         assertEquals(patient, appointmentWithId.getPatient());
@@ -120,7 +116,6 @@ class AppointmentTest {
                         now.toLocalTime(),
                         patient,
                         practitioner);
-        assertEquals(Appointment.AppointmentType.CHECK_IN, appointment.getType());
         assertEquals(now.toLocalDate(), appointment.getDate());
         assertEquals(now.toLocalDate(), appointment.getDate());
         assertEquals(now.toLocalTime(), appointment.getStartTime());
@@ -138,7 +133,6 @@ class AppointmentTest {
                         patient,
                         practitioner);
         assertEquals(id, appointmentWithId.getId());
-        assertEquals(Appointment.AppointmentType.CHECK_IN, appointmentWithId.getType());
         assertEquals(now.toLocalDate(), appointmentWithId.getDate());
         assertEquals(now.toLocalTime(), appointmentWithId.getStartTime());
         assertEquals(patient, appointmentWithId.getPatient());
@@ -218,8 +212,8 @@ class AppointmentTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when starting time is null")
-    void shouldThrowExceptionWhenStartingDateIsNull() {
+    @DisplayName("Should throw exception when start time is null")
+    void shouldThrowExceptionWhenStartTimeIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         LocalDate nowDate = LocalDate.now();

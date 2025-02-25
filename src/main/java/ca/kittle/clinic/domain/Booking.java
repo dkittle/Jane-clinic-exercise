@@ -11,6 +11,7 @@ import java.util.UUID;
 public class Booking {
 
     private static final String ID_NULL_ERROR = "Booking ID cannot be null";
+    private static final String TYPE_NULL_ERROR = "Appointment type cannot be null";
     private static final String DATE_NULL_ERROR = "Booking date cannot be null";
     private static final String AFTER_NULL_ERROR = "Booking earliest date cannot be null";
     private static final String TIME_NULL_ERROR = "Booking start time cannot be null";
@@ -20,6 +21,7 @@ public class Booking {
     private static final String TIME_IN_PAST_ERROR = "Booking start time cannot be in the past";
 
     private final UUID id;
+    private final Appointment.AppointmentType appointmentType;
     private final LocalDate date;
     private final LocalTime startTime;
     private final Patient patient;
@@ -29,14 +31,16 @@ public class Booking {
      * This is the preferred way to create a new Booking as it ensures the Booking is in the future.
      *
      * @param afterThisDateTime the date that the booking must start after; must not be null
-     * @param date the date of the booking; must not be null or in the past
-     * @param startTime the start time of the booking; must not be null or in the past
-     * @param patient the patient associated with the booking; must not be null
-     * @param practitioner the practitioner associated with the booking; must not be null
+     * @param appointmentType   the type of appointment (from the enumerated set)
+     * @param date              the date of the booking; must not be null or in the past
+     * @param startTime         the start time of the booking; must not be null or in the past
+     * @param patient           the patient associated with the booking; must not be null
+     * @param practitioner      the practitioner associated with the booking; must not be null
      * @throws IllegalArgumentException if any parameter is null or invalid
      */
     public static Booking createFutureBooking(
             LocalDateTime afterThisDateTime,
+            Appointment.AppointmentType appointmentType,
             LocalDate date,
             LocalTime startTime,
             Patient patient,
@@ -54,19 +58,22 @@ public class Booking {
         if (afterThisDateTime.toLocalDate().isEqual(date) &&
                 !afterThisDateTime.isBefore(date.atTime(startTime)))
             throw new IllegalArgumentException(TIME_IN_PAST_ERROR);
-        return new Booking(date, startTime, patient, practitioner);
+        return new Booking(appointmentType, date, startTime, patient, practitioner);
     }
 
     /**
      * This constructor is the preferred method for creating a new Booking.
      *
-     * @param date the date of the booking; must not be null or in the past
-     * @param startTime the start time of the booking; must not be null or in the past
-     * @param patient the patient associated with the booking; must not be null
-     * @param practitioner the practitioner associated with the booking; must not be null
+     * @param appointmentType   the type of appointment (from the enumerated set)
+     * @param date              the date of the booking; must not be null or in the past
+     * @param startTime         the start time of the booking; must not be null or in the past
+     * @param patient           the patient associated with the booking; must not be null
+     * @param practitioner      the practitioner associated with the booking; must not be null
      * @throws IllegalArgumentException if any parameter is null or invalid
      */
-    Booking(LocalDate date, LocalTime startTime, Patient patient, Practitioner practitioner) {
+    Booking(Appointment.AppointmentType appointmentType, LocalDate date, LocalTime startTime, Patient patient, Practitioner practitioner) {
+        if (appointmentType == null)
+            throw new IllegalArgumentException(TYPE_NULL_ERROR);
         if (date == null)
             throw new IllegalArgumentException(DATE_NULL_ERROR);
         if (startTime == null)
@@ -77,6 +84,7 @@ public class Booking {
             throw new IllegalArgumentException(PRACTITIONER_NULL_ERROR);
         this.id = UUID.randomUUID();
         this.date = date;
+        this.appointmentType = appointmentType;
         this.startTime = startTime;
         this.patient = patient;
         this.practitioner = practitioner;
@@ -85,16 +93,19 @@ public class Booking {
     /**
      * This constructor would typically be used by repository classes, creating a booking from a datastore
      *
-     * @param id the unique identifier for the Booking
-     * @param date the date of the booking; must not be null or in the past
-     * @param startTime the start time of the booking; must not be null or in the past
-     * @param patient the patient associated with the booking; must not be null
-     * @param practitioner the practitioner associated with the booking; must not be null
+     * @param id                the unique identifier for the Booking
+     * @param appointmentType   the type of appointment (from the enumerated set)
+     * @param date              the date of the booking; must not be null or in the past
+     * @param startTime         the start time of the booking; must not be null or in the past
+     * @param patient           the patient associated with the booking; must not be null
+     * @param practitioner      the practitioner associated with the booking; must not be null
      * @throws IllegalArgumentException if any parameter is null or invalid
      */
-    Booking(UUID id, LocalDate date, LocalTime startTime, Patient patient, Practitioner practitioner) {
+    Booking(UUID id, Appointment.AppointmentType appointmentType, LocalDate date, LocalTime startTime, Patient patient, Practitioner practitioner) {
         if (id == null)
             throw new IllegalArgumentException(ID_NULL_ERROR);
+        if (appointmentType == null)
+            throw new IllegalArgumentException(TYPE_NULL_ERROR);
         if (date == null)
             throw new IllegalArgumentException(DATE_NULL_ERROR);
         if (startTime == null)
@@ -104,6 +115,7 @@ public class Booking {
         if (practitioner == null)
             throw new IllegalArgumentException(PRACTITIONER_NULL_ERROR);
         this.id = id;
+        this.appointmentType = appointmentType;
         this.date = date;
         this.startTime = startTime;
         this.patient = patient;
