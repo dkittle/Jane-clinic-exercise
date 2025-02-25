@@ -4,11 +4,14 @@
 
 - I don't need to associate the practitioner with the clinic as there is only one practitioner per clinic to begin with and we will only support one clinic for the mvp.
 - All clinics, patients, and practitioners will use North American phone numbers in the form ###-###-####.
+- I'm using LocalDate, LocalTime, and LocalDateTime with the assumption that patients and practitioners will not use the app from a timezone different from the timezone of the clinic.
 
 ## Commentary
 - Should really use a Validator from hibernate validations but it can be done later.
-- Even without a Validator, Illegal Argument Exceptions should be more specific (other than just the message content) when there is an exception creating a domain class. 
-
+- Even without a Validator, Illegal Argument Exceptions should be more specific (other than just the message content) when there is an exception creating a domain class.
+- There is duplication of validation logic in the constructors with and without ids but it'll start for now until proper validators are in place.
+- I'm going to put my business logic encapsulating the business rules in the domain classes. We can refactor that out when we implement a UI and data persistence. We can also debase Onion, Clean, Vertical Slice and other architecture pattens at that time.
+- 
 
 
 ## Domain Modelling

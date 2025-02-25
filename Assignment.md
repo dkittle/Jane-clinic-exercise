@@ -27,9 +27,9 @@ Design and implement the core components of an on-line scheduling application fo
 
 - [ ] The clinic is open from 9am until 5pm.
 - [ ] The clinic offers three types of appointments:
-  - [ ] a 90 minutes initial consultation, 
-  - [ ] standard 60 minute appointments and,
-  - [ ] 30 minute check-ins.
+  - [x] a 90 minutes initial consultation, 
+  - [x] standard 60 minute appointments and,
+  - [x] 30 minute check-ins.
 - [ ] Appointments do not overlap. There can only be one booked appointment at any time.
 - [ ] Appointments start on:
   - [ ] the hour or,

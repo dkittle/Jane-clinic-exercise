@@ -1,5 +1,6 @@
 package ca.kittle.clinic.domain;
 
+import ca.kittle.clinic.domain.fixtures.TestPractitioner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,10 @@ class PractitionerTest {
         assertEquals(LAST_NAME, practitioner.getLastName());
         assertEquals(PHONE_NUMBER, practitioner.getPhoneNumber());
         assertEquals(EMAIL, practitioner.getEmail());
+
+        Practitioner cheria = TestPractitioner.CHERIA;
+        assertEquals("Cheria", cheria.getFirstName());
+        assertEquals("Lee", cheria.getLastName());
     }
 
     @Test

@@ -13,7 +13,7 @@ public class Clinic {
     private static final LocalTime OPENING_TIME = LocalTime.of(9, 0);
     private static final LocalTime CLOSING_TIME = LocalTime.of(17, 0);
 
-    private static final String ID_NULL_ERROR = "Clinic ID cannot be null or blank";
+    private static final String ID_NULL_ERROR = "Clinic ID cannot be null";
     private static final String NAME_NULL_ERROR = "Clinic name cannot be null or blank";
     private static final String PHONE_NULL_ERROR = "Clinic phone number cannot be null or blank";
     private static final String PHONE_INVALID_ERROR = "Clinic phone number cannot be in the form ###-###-####";
