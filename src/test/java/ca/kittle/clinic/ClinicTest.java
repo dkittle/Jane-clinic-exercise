@@ -9,7 +9,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ClinicTest {
+class ClinicTest {
 
     private static final String CLINIC_NAME = "Test Clinic";
     private static final String PHONE_NUMBER = "123-456-7890";

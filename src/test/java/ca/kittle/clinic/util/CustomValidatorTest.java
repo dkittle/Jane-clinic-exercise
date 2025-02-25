@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import util.CustomValidator;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CustomValidatorTest {
+class CustomValidatorTest {
     private static final String PHONE_NUMBER = "416-555-1111";
 
     @Test
