@@ -127,7 +127,6 @@ class BookingTest {
     @Test
     @DisplayName("Should throw exception when patient is null")
     void shouldThrowExceptionWhenPatientIsNull() {
-        Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         LocalDateTime now = LocalDateTime.now();
         LocalDate nowDate = now.toLocalDate().plusDays(1);
@@ -141,7 +140,6 @@ class BookingTest {
     @DisplayName("Should throw exception when practitioner is null")
     void shouldThrowExceptionWhenPractitionerIsNull() {
         Patient patient = patients.get(0);
-        Practitioner practitioner = TestPractitioner.CHERIA;
         LocalDateTime now = LocalDateTime.now();
         LocalDate nowDate = now.toLocalDate().plusDays(1);
         LocalTime nowTime = now.toLocalTime();
