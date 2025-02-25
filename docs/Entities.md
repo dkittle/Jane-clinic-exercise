@@ -39,7 +39,7 @@ classDiagram
 title: Clinic class
 ---
 classDiagram
-    class Booking{
+    class Clinic{
         +String name
         +Time openingTime
         +Time closingTime
@@ -53,7 +53,7 @@ classDiagram
 title: Patient class
 ---
 classDiagram
-    class Booking{
+    class Patient{
         +String firstName
         +String lastName
         +String phoneNumber
@@ -66,7 +66,7 @@ classDiagram
 title: Practitioner class
 ---
 classDiagram
-    class Booking{
+    class Practitioner{
         +String firstName
         +String lastName
         +String phoneNumber
