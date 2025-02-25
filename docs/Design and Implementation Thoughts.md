@@ -4,8 +4,12 @@
 
 - I don't need to associate the practitioner with the clinic as there is only one practitioner per clinic to begin with and we will only support one clinic for the mvp.
 - All clinics, patients, and practitioners will use North American phone numbers in the form ###-###-####.
+
+## Commentary
 - Should really use a Validator from hibernate validations but it can be done later.
-- 
+- Even without a Validator, Illegal Argument Exceptions should be more specific (other than just the message content) when there is an exception creating a domain class. 
+
+
 
 ## Domain Modelling
 
