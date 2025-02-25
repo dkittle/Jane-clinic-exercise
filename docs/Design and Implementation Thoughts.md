@@ -1,5 +1,12 @@
 # Design/Impl Questions and Thoughts
 
+## Assumptions
+
+- I don't need to associate the practitioner with the clinic as there is only one practitioner per clinic to begin with and we will only support one clinic for the mvp.
+- All clinics, patients, and practitioners will use North American phone numbers in the form ###-###-####.
+- Should really use a Validator from hibernate validations but it can be done later.
+- 
+
 ## Domain Modelling
 
 **Should patient and practitioner be a part of both Appointment and Booking classes?**  
