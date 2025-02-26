@@ -1,7 +1,10 @@
 package ca.kittle.clinic.domain;
 
+import ca.kittle.clinic.domain.fixtures.TestClinic;
 import ca.kittle.clinic.domain.fixtures.TestPatients;
 import ca.kittle.clinic.domain.fixtures.TestPractitioner;
+import ca.kittle.clinic.domain.validation.BookingValidationError;
+import io.jbock.util.Either;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookingTest {
 
@@ -27,118 +29,61 @@ class BookingTest {
     @Test
     @DisplayName("Should be able to create a booking with valid consultation appointment data")
     void shouldCreateBookingWithValidConsultationAppointmentData() {
-        UUID id = UUID.randomUUID();
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.CONSULTATION;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        Booking booking = new Booking(type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(now, clinicHours, type, bookingDate, startTime, patient, practitioner);
+        assertTrue(result.isRight() && result.getRight().isPresent());
+        Booking booking = result.getRight().get();
         assertEquals(type, booking.getAppointmentType());
-        assertEquals(now.toLocalDate(), booking.getDate());
-        assertEquals(now.toLocalTime(), booking.getStartTime());
+        assertEquals(bookingDate, booking.getDate());
+        assertEquals(startTime, booking.getStartTime());
         assertEquals(patient, booking.getPatient());
         assertEquals(practitioner, booking.getPractitioner());
-        Booking bookingWithId = new Booking(id, type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
-        assertEquals(id, bookingWithId.getId());
-        assertEquals(type, bookingWithId.getAppointmentType());
-        assertEquals(now.toLocalDate(), bookingWithId.getDate());
-        assertEquals(now.toLocalTime(), bookingWithId.getStartTime());
-        assertEquals(patient, bookingWithId.getPatient());
-        assertEquals(practitioner, bookingWithId.getPractitioner());
     }
 
     @Test
     @DisplayName("Should be able to create a booking with valid standard appointment data")
     void shouldCreateBookingWithValidStandardAppointmentData() {
-        UUID id = UUID.randomUUID();
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        Booking booking = new Booking(type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(now, clinicHours, type, bookingDate, startTime, patient, practitioner);
+        assertTrue(result.isRight() && result.getRight().isPresent());
+        Booking booking = result.getRight().get();
         assertEquals(type, booking.getAppointmentType());
-        assertEquals(now.toLocalDate(), booking.getDate());
-        assertEquals(now.toLocalTime(), booking.getStartTime());
+        assertEquals(bookingDate, booking.getDate());
+        assertEquals(startTime, booking.getStartTime());
         assertEquals(patient, booking.getPatient());
         assertEquals(practitioner, booking.getPractitioner());
-        Booking bookingWithId = new Booking(id, type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
-        assertEquals(id, bookingWithId.getId());
-        assertEquals(type, bookingWithId.getAppointmentType());
-        assertEquals(now.toLocalDate(), bookingWithId.getDate());
-        assertEquals(now.toLocalTime(), bookingWithId.getStartTime());
-        assertEquals(patient, bookingWithId.getPatient());
-        assertEquals(practitioner, bookingWithId.getPractitioner());
     }
 
     @Test
     @DisplayName("Should be able to create a booking with valid check-in appointment data")
     void shouldCreateBookingWithValidCheckInAppointmentData() {
-        UUID id = UUID.randomUUID();
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.CHECK_IN;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        Booking booking = new Booking(type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(now, clinicHours, type, bookingDate, startTime, patient, practitioner);
+        assertTrue(result.isRight() && result.getRight().isPresent());
+        Booking booking = result.getRight().get();
         assertEquals(type, booking.getAppointmentType());
-        assertEquals(now.toLocalDate(), booking.getDate());
-        assertEquals(now.toLocalTime(), booking.getStartTime());
+        assertEquals(bookingDate, booking.getDate());
+        assertEquals(startTime, booking.getStartTime());
         assertEquals(patient, booking.getPatient());
         assertEquals(practitioner, booking.getPractitioner());
-        Booking bookingWithId = new Booking(id, type, now.toLocalDate(), now.toLocalTime(), patient, practitioner);
-        assertEquals(id, bookingWithId.getId());
-        assertEquals(type, bookingWithId.getAppointmentType());
-        assertEquals(now.toLocalDate(), bookingWithId.getDate());
-        assertEquals(now.toLocalTime(), bookingWithId.getStartTime());
-        assertEquals(patient, bookingWithId.getPatient());
-        assertEquals(practitioner, bookingWithId.getPractitioner());
-    }
-
-    @Test
-    @DisplayName("Should be able to create a booking 10 minutes in the future")
-    void shouldCreateBookingWithFutureTime() {
-        // NOTE: This test is not in line with business logic - that is encapsulated in builders for a Booking that I'll create later
-        Patient patient = patients.get(0);
-        Practitioner practitioner = TestPractitioner.CHERIA;
-        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
-        LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate();
-        LocalTime nowTime = now.toLocalTime().plusMinutes(10);
-        Booking booking = Booking.createFutureBooking(now, type, nowDate, nowTime, patient, practitioner);
-        assertEquals(type, booking.getAppointmentType());
-        assertEquals(nowDate, booking.getDate());
-        assertEquals(nowTime, booking.getStartTime());
-        assertEquals(patient, booking.getPatient());
-        assertEquals(practitioner, booking.getPractitioner());
-    }
-
-    @Test
-    @DisplayName("Should NOT be able to create a booking that starts this instant")
-    void shouldThrowExceptionWhenBookingStartsThisInstant() {
-        // NOTE: This test is not in line with business logic - that is encapsulated in builders for a Booking that I'll create later
-        Patient patient = patients.get(0);
-        Practitioner practitioner = TestPractitioner.CHERIA;
-        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
-        LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate();
-        LocalTime nowTime = now.toLocalTime();
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, type, nowDate, nowTime, patient, practitioner)
-        );
-    }
-
-    @Test
-    @DisplayName("Should NOT be able to create a booking that starts in the past")
-    void shouldThrowExceptionWhenBookingStartsInThePast() {
-        // NOTE: This test is not in line with business logic - that is encapsulated in builders for a Booking that I'll create later
-        Patient patient = patients.get(0);
-        Practitioner practitioner = TestPractitioner.CHERIA;
-        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
-        LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate();
-        LocalTime nowTime = now.toLocalTime().minusMinutes(3);
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, type, nowDate, nowTime, patient, practitioner)
-        );
     }
 
     @Test
@@ -147,11 +92,51 @@ class BookingTest {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate().plusDays(1);
-        LocalTime nowTime = now.toLocalTime();
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(null, type, nowDate, nowTime, patient, practitioner)
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                null,
+                clinicHours,
+                type,
+                bookingDate,
+                startTime,
+                patient,
+                practitioner
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.EarliestDateNullError
+                )
+        );
+    }
+
+    @Test
+    @DisplayName("Should throw exception when clinic hours is null")
+    void shouldThrowExceptionWhenAppointmentClinicHoursIsNull() {
+        Patient patient = patients.get(0);
+        Practitioner practitioner = TestPractitioner.CHERIA;
+        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                now,
+                null,
+                type,
+                bookingDate,
+                startTime,
+                patient,
+                practitioner
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.ClinicHoursNullError
+                )
         );
     }
 
@@ -160,11 +145,24 @@ class BookingTest {
     void shouldThrowExceptionWhenAppointmentTypeIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate();
-        LocalTime nowTime = now.toLocalTime();
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, null, nowDate, nowTime, patient, practitioner)
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                now,
+                clinicHours,
+                null,
+                bookingDate,
+                startTime,
+                patient,
+                practitioner
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.TypeNullError
+                )
         );
     }
 
@@ -174,10 +172,23 @@ class BookingTest {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        LocalTime nowTime = now.toLocalTime();
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, type, null, nowTime, patient, practitioner)
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                now,
+                clinicHours,
+                type,
+                null,
+                startTime,
+                patient,
+                practitioner
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.DateNullError
+                )
         );
     }
 
@@ -187,10 +198,23 @@ class BookingTest {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate().plusDays(1);
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, type, nowDate, null, patient, practitioner)
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                now,
+                clinicHours,
+                type,
+                bookingDate,
+                null,
+                patient,
+                practitioner
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.StartTimeNullError
+                )
         );
     }
 
@@ -199,11 +223,24 @@ class BookingTest {
     void shouldThrowExceptionWhenPatientIsNull() {
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate().plusDays(1);
-        LocalTime nowTime = now.toLocalTime();
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, type, nowDate, nowTime, null, practitioner)
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                now,
+                clinicHours,
+                type,
+                bookingDate,
+                startTime,
+                null,
+                practitioner
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.PatientNullError
+                )
         );
     }
 
@@ -212,26 +249,25 @@ class BookingTest {
     void shouldThrowExceptionWhenPractitionerIsNull() {
         Patient patient = patients.get(0);
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
         LocalDateTime now = LocalDateTime.now();
-        LocalDate nowDate = now.toLocalDate().plusDays(1);
-        LocalTime nowTime = now.toLocalTime();
-        assertThrows(IllegalArgumentException.class,
-                () -> Booking.createFutureBooking(now, type, nowDate, nowTime, patient, null)
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+        Either<List<BookingValidationError>, Booking> result = Booking.createBooking(
+                now,
+                clinicHours,
+                type,
+                bookingDate,
+                startTime,
+                patient,
+                null
+        );
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
+        List<BookingValidationError> errors = result.getLeft().get();
+        assertTrue(errors.stream().anyMatch(
+                        item -> item instanceof BookingValidationError.PractitionerNullError
+                )
         );
     }
-
-    @Test
-    @DisplayName("Should throw exception when ID is null in repository constructor")
-    void shouldThrowExceptionWhenIdIsNull() {
-        Patient patient = patients.get(0);
-        Practitioner practitioner = TestPractitioner.CHERIA;
-        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
-        LocalDate nowDate = LocalDate.now();
-        LocalTime nowTime = LocalTime.now();
-        assertThrows(IllegalArgumentException.class,
-                () -> new Booking(null, type, nowDate, nowTime, patient, practitioner)
-        );
-    }
-
 
 }
