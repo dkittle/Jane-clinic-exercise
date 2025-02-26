@@ -25,17 +25,17 @@ Goal of this exercise is to evaluate your coding style, code design skills, code
 
 Design and implement the core components of an on-line scheduling application for a physiotherapy clinic.
 
-- [ ] The clinic is open from 9am until 5pm.
+- [x] The clinic is open from 9am until 5pm.
 - [x] The clinic offers three types of appointments:
   - [x] a 90 minutes initial consultation, 
   - [x] standard 60 minute appointments and,
   - [x] 30 minute check-ins.
 - [ ] Appointments do not overlap. There can only be one booked appointment at any time.
-- [ ] Appointments start on:
-  - [ ] the hour or,
-  - [ ] half-hour.
-- [ ] Bookings can only be made for appointments that start and end within the clinic hours.
-- [ ] Bookings cannot be made within 2 hours of the appointment start time.
+- [x] Appointments start on:
+  - [x] the hour or,
+  - [x] half-hour.
+- [x] Bookings can only be made for appointments that start and end within the clinic hours.
+- [x] Bookings cannot be made within 2 hours of the appointment start time.
 
 ## Use Cases
 
