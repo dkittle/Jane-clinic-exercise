@@ -1,7 +1,6 @@
 package ca.kittle.clinic.domain;
 
 import ca.kittle.clinic.domain.validation.AppointmentValidationError;
-import ca.kittle.clinic.domain.validation.BookingValidationError;
 import io.jbock.util.Either;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @Getter
 public class Appointment {
-    private static final String ID_NULL_ERROR = "Appointment ID cannot be null";
     private static final String TYPE_NULL_ERROR = "Appointment type cannot be null";
     private static final String DATE_NULL_ERROR = "Appointment date cannot be null";
     private static final String TIME_NULL_ERROR = "Appointment start time cannot be null";
@@ -62,14 +60,13 @@ public class Appointment {
     /**
      * This is the preferred way to create a new Appointment as it ensures the Appointment is valid.
      *
-     * @param earliestDateTime  the date that the appointment must start after; must not be null
-     * @param type              the type of appointment (from the enumerated set)
-     * @param date              the date of the appointment; must not be null or in the past
-     * @param startTime         the start time of the appointment; must not be null or in the past
-     * @param patient           the patient associated with the appointment; must not be null
-     * @param practitioner      the practitioner associated with the appointment; must not be null
-     *
-     * @return Either<List<BookingValidationError>, Appointment> a list of validate errors or an Appointment
+     * @param earliestDateTime the date that the appointment must start after; must not be null
+     * @param type             the type of appointment (from the enumerated set)
+     * @param date             the date of the appointment; must not be null or in the past
+     * @param startTime        the start time of the appointment; must not be null or in the past
+     * @param patient          the patient associated with the appointment; must not be null
+     * @param practitioner     the practitioner associated with the appointment; must not be null
+     * @return Either<List < BookingValidationError>, Appointment> a list of validate errors or an Appointment
      */
     public static Either<List<AppointmentValidationError>, Appointment> createAppointment(
             LocalDateTime earliestDateTime,

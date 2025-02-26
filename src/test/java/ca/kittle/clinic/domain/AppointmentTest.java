@@ -127,6 +127,7 @@ class AppointmentTest {
                         startTime,
                         patient,
                         practitioner);
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
         List<AppointmentValidationError> errors = result.getLeft().get();
         assertTrue(errors.stream().anyMatch(
                         item -> item instanceof AppointmentValidationError.EarliestDateNullError
@@ -151,6 +152,7 @@ class AppointmentTest {
                         startTime,
                         patient,
                         practitioner);
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
         List<AppointmentValidationError> errors = result.getLeft().get();
         assertTrue(errors.stream().anyMatch(
                         item -> item instanceof AppointmentValidationError.TypeNullError
@@ -174,6 +176,7 @@ class AppointmentTest {
                         startTime,
                         patient,
                         practitioner);
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
         List<AppointmentValidationError> errors = result.getLeft().get();
         assertTrue(errors.stream().anyMatch(
                         item -> item instanceof AppointmentValidationError.DateNullError
@@ -196,6 +199,7 @@ class AppointmentTest {
                         null,
                         patient,
                         practitioner);
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
         List<AppointmentValidationError> errors = result.getLeft().get();
         assertTrue(errors.stream().anyMatch(
                         item -> item instanceof AppointmentValidationError.StartTimeNullError
@@ -219,6 +223,7 @@ class AppointmentTest {
                         startTime,
                         null,
                         practitioner);
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
         List<AppointmentValidationError> errors = result.getLeft().get();
         assertTrue(errors.stream().anyMatch(
                         item -> item instanceof AppointmentValidationError.PatientNullError
@@ -242,6 +247,7 @@ class AppointmentTest {
                         startTime,
                         patient,
                         null);
+        assertTrue(result.isLeft() && result.getLeft().isPresent());
         List<AppointmentValidationError> errors = result.getLeft().get();
         assertTrue(errors.stream().anyMatch(
                         item -> item instanceof AppointmentValidationError.PractitionerNullError

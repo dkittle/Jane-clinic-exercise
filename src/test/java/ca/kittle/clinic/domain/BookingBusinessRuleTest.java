@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BookingBusinessRuleTest {
+class BookingBusinessRuleTest {
 
     private static final List<Patient> patients = TestPatients.getAllPatients();
 
