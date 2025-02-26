@@ -27,8 +27,8 @@ public class Patient {
      *
      * @param firstName   The first name of the patient
      * @param lastName    The last name of the patient
-     * @param phoneNumber The phone number of the patient
-     * @param email       The email address of the patient
+     * @param phoneNumber The phone number of the patient; must be in the form ###-###-####
+     * @param email       The email address of the patient; must be in the simple form xxx@yyy.com
      */
     public Patient(String firstName, String lastName, String phoneNumber, String email) {
         if (firstName == null || firstName.isBlank())
@@ -56,8 +56,8 @@ public class Patient {
      * @param id          The UUID of the patient
      * @param firstName   The first name of the patient
      * @param lastName    The last name of the patient
-     * @param phoneNumber The phone number of the patient
-     * @param email       The email address of the patient
+     * @param phoneNumber The phone number of the patient; must be in the form ###-###-####
+     * @param email       The email address of the patient; must be in the simple form xxx@yyy.com
      */
     public Patient(UUID id, String firstName, String lastName, String phoneNumber, String email) {
         if (id == null)
