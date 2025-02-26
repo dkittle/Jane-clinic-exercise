@@ -11,6 +11,8 @@
 - Even without a Validator, Illegal Argument Exceptions should be more specific (other than just the message content) when there is an exception creating a domain class. UPDATE: I decided to return a list of errors for both Appointments and Bookings when they are validated as this seems quite important for an initial UI.
 - ~~There is duplication of validation logic in the constructors with and without ids but it'll start for now until proper validators are in place.~~ I removed constructors with ids as they'll only be needed when repositories are created.
 - I'm going to put my business logic encapsulating the business rules in the domain classes. We can refactor that out when we implement a UI and data persistence. We can also debase Onion, Clean, Vertical Slice and other architecture pattens at that time.
+- I should add a lot more tests (especially edge cases), for viewing available time slots and adding a booking.
+- **We REALLY need to synchronize the adding of a booking!**
 
 ## Domain Modelling
 
@@ -20,7 +22,7 @@ It seems, in an absolute minimal MVP, we should likely only have patient and pra
 Yet my wife gave up her appointment with a practitioner so that I could have urgently needed care at a clinic IRL (a clinic that uses Jane App) so I really want to include them in both class definitions. I realize that this could be construed as building for "future requirements", though :smile:
 
 **Should any class have clinic?**  
-Hmm, for a first release, there is only one clinic so technically we don't need to associate it with practitioners (and, by association, to bookings and appointments).
+Hmm, for a first release, there is only one clinic so technically we don't need to associate it with practitioners (and, by association, to bookings and appointments). Actually, right at the end, I realized we should have a clinic associated with a practitioner so we know the clinics hours when displaying available start times for appointments.
 
 I'll treat it as a nice to have (and call this building for the *near* future). Hmm, should a practitioner work at more than one clinic? I know some RMTs do IRL... More reason to defer it for now, as it's likely a domain question.
 

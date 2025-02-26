@@ -3,6 +3,7 @@ package ca.kittle.clinic.domain;
 import lombok.Getter;
 import util.CustomValidator;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 @Getter
@@ -11,6 +12,7 @@ public class Clinic {
     // TODO hardcoding opening and closing times for MVP, this should be externalized
     private static final LocalTime OPENING_TIME = LocalTime.of(9, 0);
     private static final LocalTime CLOSING_TIME = LocalTime.of(17, 0);
+    public static final Duration BOOKING_START_TIME_INTERVAL = Duration.ofMinutes(30);
 
     private static final String NAME_NULL_ERROR = "Clinic name cannot be null or blank";
     private static final String PHONE_NULL_ERROR = "Clinic phone number cannot be null or blank";

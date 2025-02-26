@@ -30,7 +30,7 @@ Design and implement the core components of an on-line scheduling application fo
   - [x] a 90 minutes initial consultation, 
   - [x] standard 60 minute appointments and,
   - [x] 30 minute check-ins.
-- [ ] Appointments do not overlap. There can only be one booked appointment at any time.
+- [x] Appointments do not overlap. There can only be one booked appointment at any time.
 - [x] Appointments start on:
   - [x] the hour or,
   - [x] half-hour.
@@ -41,10 +41,10 @@ Design and implement the core components of an on-line scheduling application fo
 
 ### Patient
 
-- [ ] Provide the patient with a list of available appointment times. Inputs are the appointment type and a date, either today or in the future. The 2 hour booking deadline applies for today’s appointments.
-- [ ] Allow the patient to book an appointment.
+- [x] Provide the patient with a list of available appointment times. Inputs are the appointment type and a date, either today or in the future. The 2 hour booking deadline applies for today’s appointments.
+- [x] Allow the patient to book an appointment.
 
 ### Practitioner
 
-- [ ] List scheduled appointments for the current day.
+- [x] List scheduled appointments for the current day.
 

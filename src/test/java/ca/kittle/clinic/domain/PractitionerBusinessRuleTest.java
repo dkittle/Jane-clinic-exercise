@@ -174,4 +174,68 @@ class PractitionerBusinessRuleTest {
     }
 
 
+    @Test
+    @DisplayName("Patient should be able to view available time slots for appointment type")
+    void shouldSeeAvailableTimeSlotsForAppointmentType() {
+        Patient patient = patients.get(1);
+        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = clinic.getHours();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+
+        Either<List<BookingValidationError>, Booking> result =
+                practitioner.addBooking(
+                        patient,
+                        clinic,
+                        type,
+                        bookingDate,
+                        startTime);
+        assertTrue(result.isRight() && result.getRight().isPresent());
+        Booking booking = result.getRight().get();
+
+        Either<List<AppointmentValidationError>, Appointment> appointmentResult =
+                practitioner.createAppointment(booking);
+        assertTrue(appointmentResult.isRight() && appointmentResult.getRight().isPresent());
+    }
+
+    @Test
+    @DisplayName("Should return all time slots for an empty day")
+    void shouldReturnAllTimeSlotsForAnEmptyDay() {
+        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = clinic.getHours();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+
+        List<LocalTime> times = practitioner.availabileTimes(bookingDate, type);
+        assertTrue(times.stream().anyMatch(item -> item.equals(startTime)));
+        assertEquals(16, times.size());
+    }
+
+    @Test
+    @DisplayName("Should return time slots for 10am onward if first hour blocked")
+    void shouldReturnTimeSlotsFor10amOnwardIfFirstHourBlocked() {
+        Patient patient = patients.get(0);
+        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = clinic.getHours();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+
+        Either<List<BookingValidationError>, Booking> result =
+                practitioner.addBooking(
+                        patient,
+                        clinic,
+                        type,
+                        bookingDate,
+                        startTime);
+        assertTrue(result.isRight() && result.getRight().isPresent());
+
+        List<LocalTime> times = practitioner.availabileTimes(bookingDate, type);
+        assertTrue(times.stream().anyMatch(item -> item.equals(LocalTime.of(10, 0))));
+        assertTrue(times.stream().anyMatch(item -> item.isAfter(LocalTime.of(9, 59))));
+        assertEquals(14, times.size());
+    }
+
 }
