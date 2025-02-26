@@ -15,11 +15,11 @@ Goal of this exercise is to evaluate your coding style, code design skills, code
 
 ## Assignment Requirements
 
-- [ ] Include a set of unit tests
-- [ ] Submitted in a Git repository
-    - [ ] Clear documentation on how to run the tests
-    - [ ] Assumptions that you’ve made
-    - [ ] Missing details that would complete the solution
+- [x] Include a set of unit tests
+- [x] Submitted in a Git repository
+    - [x] Clear documentation on how to run the tests
+    - [x] Assumptions that you’ve made
+    - [x] Missing details that would complete the solution
 
 ## Product Requirements
 

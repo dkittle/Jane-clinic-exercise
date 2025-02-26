@@ -8,8 +8,8 @@ classDiagram
         +AppointmentType type
         +Duration durationInMinutes
         +bool isConsultation
-        +Date date
-        +Time startTime
+        +LocalDate date
+        +LocalTime startTime
         +Practitioner practitioner
         +Patient patient
         +String notes
@@ -27,8 +27,8 @@ title: Booking class
 classDiagram
     class Booking{
         +AppointmentType appointmentType
-        +Date date
-        +Time startTime
+        +LocalDate date
+        +LocalTime startTime
         +Practitioner practitioner
         +Patient patient
     }
@@ -41,10 +41,20 @@ title: Clinic class
 classDiagram
     class Clinic{
         +String name
-        +Time openingTime
-        +Time closingTime
+        +ClinicHours clinicHours
         +String phoneNumber
         +String email
+    }
+```
+
+```mermaid
+---
+title: Clinic Hours class
+---
+classDiagram
+    class ClinicHours{
+        +LocalTime openingTime
+        +LocalTime closingTime
     }
 ```
 
@@ -86,8 +96,8 @@ classDiagram
     class Appointment{
         abstract Duration durationInMinutes
         abstract bool isConsultation
-        +Date date
-        +Time startTime
+        +LocalDate date
+        +LocalTime startTime
         +Practitioner practitioner
         +Patient patient
     }

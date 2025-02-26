@@ -8,11 +8,9 @@
 
 ## Commentary
 - Should really use a Validator from hibernate validations but it can be done later.
-- Even without a Validator, Illegal Argument Exceptions should be more specific (other than just the message content) when there is an exception creating a domain class.
-- There is duplication of validation logic in the constructors with and without ids but it'll start for now until proper validators are in place.
+- Even without a Validator, Illegal Argument Exceptions should be more specific (other than just the message content) when there is an exception creating a domain class. UPDATE: I decided to return a list of errors for both Appointments and Bookings when they are validated as this seems quite important for an initial UI.
+- ~~There is duplication of validation logic in the constructors with and without ids but it'll start for now until proper validators are in place.~~ I removed constructors with ids as they'll only be needed when repositories are created.
 - I'm going to put my business logic encapsulating the business rules in the domain classes. We can refactor that out when we implement a UI and data persistence. We can also debase Onion, Clean, Vertical Slice and other architecture pattens at that time.
-- 
-
 
 ## Domain Modelling
 
@@ -53,4 +51,3 @@ CANCELLED (cancelled by patient online or by contacting clinic)
 NO_SHOW (patient didn't show up for appointment)  
 COMPLETED (appointment happened)  
 RESCHEDULED (is this needed?)
-
