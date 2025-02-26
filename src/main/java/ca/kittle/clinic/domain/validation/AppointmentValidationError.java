@@ -5,10 +5,10 @@ public sealed interface AppointmentValidationError {
     record TypeNullError() implements AppointmentValidationError {
     }
 
-    record DateNullError() implements AppointmentValidationError {
+    record CannotCreateAppointmentError() implements AppointmentValidationError {
     }
 
-    record ClinicHoursNullError() implements AppointmentValidationError {
+    record DateNullError() implements AppointmentValidationError {
     }
 
     record EarliestDateNullError() implements AppointmentValidationError {
@@ -17,25 +17,10 @@ public sealed interface AppointmentValidationError {
     record StartTimeNullError() implements AppointmentValidationError {
     }
 
-    record DesiredStartTimeError() implements AppointmentValidationError {
-    }
-
-    record TooSoonToAppointmentError() implements AppointmentValidationError {
-    }
-
     record PatientNullError() implements AppointmentValidationError {
     }
 
     record PractitionerNullError() implements AppointmentValidationError {
-    }
-
-    record DateInPastError() implements AppointmentValidationError {
-    }
-
-    record TimeInPastError() implements AppointmentValidationError {
-    }
-
-    record OutsideBusinessHoursError() implements AppointmentValidationError {
     }
 }
 
