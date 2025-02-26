@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BookingBusinessRuleTest {
+class BookingBusinessRuleTest {
 
     private static final List<Patient> patients = TestPatients.getAllPatients();
 
@@ -57,7 +57,7 @@ public class BookingBusinessRuleTest {
                         clinicHours,
                         type,
                         bookingDate,
-                        startTime.minusMinutes(30),
+                        startTime.minusMinutes(Clinic.BOOKING_START_TIME_INTERVAL.toMinutes()),
                         patient,
                         practitioner);
         assertTrue(result.isLeft() && result.getLeft().isPresent());
@@ -80,6 +80,7 @@ public class BookingBusinessRuleTest {
         LocalTime startTime = clinicHours.getOpeningTime();
 
         Either<List<BookingValidationError>, Booking> result;
+        // FIXME this is working with the assumption bookings are ONLY on the hour and half hour, should use Clinic.BOOKING_START_TIME_INTERVAL here.
         for (int i = 1; i < 30; i++) {
             result =
                     Booking.createBooking(

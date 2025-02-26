@@ -176,7 +176,7 @@ public class Booking {
                 bookingStartTime.isBefore(earliestDateTime.toLocalTime()))
             errors.add(new BookingValidationError.TimeInPastError());
         // Bookings start on the hour or on the half hour
-        if (bookingStartTime.getMinute() != 0 && bookingStartTime.getMinute() != 30)
+        if (bookingStartTime.getMinute() % Clinic.BOOKING_START_TIME_INTERVAL.toMinutes() != 0)
             errors.add(new BookingValidationError.DesiredStartTimeError());
         // Bookings cannot be made within 2 hours of the appointment start time
         if (!earliestDateTime.plusHours(2).isBefore(LocalDateTime.of(bookingDate, bookingStartTime)))
@@ -206,7 +206,39 @@ public class Booking {
         return otherBookings.stream().anyMatch(
                 otherBooking ->
                         (this.date.isEqual(otherBooking.date) &&
-                                otherBooking.getStartTime().isBefore(myEndTime) &&
-                                otherBooking.getEndTime().isAfter(this.startTime)));
+                                doAppointmentTimesOverlap(
+                                        this.startTime,
+                                        myEndTime,
+                                        otherBooking.startTime,
+                                        otherBooking.getEndTime()))
+        );
+    }
+
+    public static boolean doAppointmentTimesOverlapOtherBookings(
+            LocalTime startTime,
+            LocalTime endTime,
+            List<Booking> otherBookings
+    ) {
+        // FIXME should null throw an illegal argument exception?
+        if (otherBookings == null || otherBookings.isEmpty())
+            return false;
+
+        // Do any other bookings start before my end time and end after my start time
+        return otherBookings.stream().anyMatch(
+                otherBooking ->
+                                doAppointmentTimesOverlap(
+                                        startTime,
+                                        endTime,
+                                        otherBooking.startTime,
+                                        otherBooking.getEndTime())
+        );
+    }
+
+    public static boolean doAppointmentTimesOverlap(
+            LocalTime firstStartTime,
+            LocalTime firstEndTime,
+            LocalTime secondStartTime,
+            LocalTime secondEndTime) {
+                return secondStartTime.isBefore(firstEndTime) && secondEndTime.isAfter(firstStartTime);
     }
 }

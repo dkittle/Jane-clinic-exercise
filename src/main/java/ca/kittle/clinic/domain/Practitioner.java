@@ -75,6 +75,20 @@ public class Practitioner {
                 .toList();
     }
 
+    public List<LocalTime> availabileTimes(LocalDate forDate, Appointment.AppointmentType appointmentType) {
+        List<LocalTime> times = new ArrayList<>();
+        List<Booking> bookings = listBookings(forDate);
+        // FIXME Need to use actual clinic hours here, not hardcoded values
+        for (int hour = 9; hour < 17; hour++) {
+            for (int minute = 0; minute < 60; minute += (int) Clinic.BOOKING_START_TIME_INTERVAL.toMinutes()) {
+                LocalTime startTime = LocalTime.of(hour, minute);
+                LocalTime endTime = startTime.plusMinutes(appointmentType.getDuration().toMinutes());
+                if (!Booking.doAppointmentTimesOverlapOtherBookings(startTime, endTime, bookings))
+                    times.add(startTime);
+            }
+        }
+        return times;
+    }
 
     /**
      * Cancels an existing booking for this practitioner.
