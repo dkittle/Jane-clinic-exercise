@@ -75,6 +75,15 @@ public class Practitioner {
                 .toList();
     }
 
+
+    /**
+     * Retrieves a list of available time slots for the practitioner on a specific date, based on the appointment type.
+     * Ensures time slots do not overlap with existing bookings.
+     *
+     * @param forDate         The date to check for available time slots.
+     * @param appointmentType The appointment type, which determines the duration of the appointment.
+     * @return A list of available {@link LocalTime} slots on the specified date.
+     */
     public List<LocalTime> availabileTimes(LocalDate forDate, Appointment.AppointmentType appointmentType) {
         List<LocalTime> times = new ArrayList<>();
         List<Booking> bookings = listBookings(forDate);

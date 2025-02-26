@@ -114,7 +114,7 @@ public class Booking {
     /**
      * Ensure that the basic properties for a Booking are not null
      *
-     * @param afterThisDateTime the date that the booking must start after; must not be null
+     * @param earliestDateTime  the date that the booking must start after; must not be null
      * @param clinicHours       the hours that the clinic opens and closes; must not be null
      * @param appointmentType   the type of appointment (from the enumerated set)
      * @param date              the date of the booking; must not be null or in the past
@@ -124,7 +124,7 @@ public class Booking {
      * @return Optional List<BookingValidationError> a list of any errors found
      */
     private static List<BookingValidationError> checkBookingParamsForNulls(
-            LocalDateTime afterThisDateTime,
+            LocalDateTime earliestDateTime,
             ClinicHours clinicHours,
             Appointment.AppointmentType appointmentType,
             LocalDate date,
@@ -133,7 +133,7 @@ public class Booking {
             Practitioner practitioner) {
         List<BookingValidationError> errors = new ArrayList<>();
 
-        if (afterThisDateTime == null)
+        if (earliestDateTime == null)
             errors.add(new BookingValidationError.EarliestDateNullError());
         if (clinicHours == null)
             errors.add(new BookingValidationError.ClinicHoursNullError());
@@ -195,6 +195,13 @@ public class Booking {
         return this.startTime.plus(this.appointmentType.getDuration());
     }
 
+    
+    /**
+     * Checks if the current booking overlaps with any of the bookings in the provided list.
+     *
+     * @param otherBookings A list of bookings to check against; may be null or empty.
+     * @return {@code true} if at least one booking overlaps with the current booking; {@code false} otherwise.
+     */
     public boolean doesBookingOverlap(List<Booking> otherBookings) {
         // FIXME should null throw an illegal argument exception?
         if (otherBookings == null || otherBookings.isEmpty())
@@ -214,6 +221,15 @@ public class Booking {
         );
     }
 
+    
+    /**
+     * Checks if the given start and end time overlaps with any bookings in the provided list.
+     *
+     * @param startTime     The start time of the appointment to check for overlap.
+     * @param endTime       The end time of the appointment to check for overlap.
+     * @param otherBookings A list of existing bookings to compare against; may be null or empty.
+     * @return {@code true} if at least one booking overlaps with the provided time range; {@code false} otherwise.
+     */
     public static boolean doAppointmentTimesOverlapOtherBookings(
             LocalTime startTime,
             LocalTime endTime,
@@ -226,19 +242,30 @@ public class Booking {
         // Do any other bookings start before my end time and end after my start time
         return otherBookings.stream().anyMatch(
                 otherBooking ->
-                                doAppointmentTimesOverlap(
-                                        startTime,
-                                        endTime,
-                                        otherBooking.startTime,
-                                        otherBooking.getEndTime())
+                        doAppointmentTimesOverlap(
+                                startTime,
+                                endTime,
+                                otherBooking.startTime,
+                                otherBooking.getEndTime())
         );
     }
 
+
+    /**
+     * Determines if two time intervals overlap. The intervals are defined by a start and end time for each.
+     * Overlap is identified if the second interval starts before the first one ends and ends after the first one starts.
+     *
+     * @param firstStartTime  The start time of the first interval.
+     * @param firstEndTime    The end time of the first interval.
+     * @param secondStartTime The start time of the second interval.
+     * @param secondEndTime   The end time of the second interval.
+     * @return {@code true} if the two intervals overlap, {@code false} otherwise.
+     */
     public static boolean doAppointmentTimesOverlap(
             LocalTime firstStartTime,
             LocalTime firstEndTime,
             LocalTime secondStartTime,
             LocalTime secondEndTime) {
-                return secondStartTime.isBefore(firstEndTime) && secondEndTime.isAfter(firstStartTime);
+        return secondStartTime.isBefore(firstEndTime) && secondEndTime.isAfter(firstStartTime);
     }
 }
