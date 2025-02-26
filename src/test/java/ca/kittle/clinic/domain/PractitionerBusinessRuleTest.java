@@ -3,6 +3,7 @@ package ca.kittle.clinic.domain;
 import ca.kittle.clinic.domain.fixtures.TestClinic;
 import ca.kittle.clinic.domain.fixtures.TestPatients;
 import ca.kittle.clinic.domain.fixtures.TestPractitioner;
+import ca.kittle.clinic.domain.validation.AppointmentValidationError;
 import ca.kittle.clinic.domain.validation.BookingValidationError;
 import io.jbock.util.Either;
 import org.junit.jupiter.api.BeforeAll;
@@ -146,5 +147,31 @@ class PractitionerBusinessRuleTest {
                 )
         );
     }
+
+    @Test
+    @DisplayName("Should be able to create an appointment from a valid booking")
+    void shouldCreateAnAppointmentFromAValidBooking() {
+        Patient patient = patients.get(0);
+        Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
+        ClinicHours clinicHours = clinic.getHours();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate bookingDate = now.toLocalDate().plusDays(1);
+        LocalTime startTime = clinicHours.getOpeningTime();
+
+        Either<List<BookingValidationError>, Booking> result =
+                practitioner.addBooking(
+                        patient,
+                        clinic,
+                        type,
+                        bookingDate,
+                        startTime);
+        assertTrue(result.isRight() && result.getRight().isPresent());
+        Booking booking = result.getRight().get();
+
+        Either<List<AppointmentValidationError>, Appointment> appointmentResult =
+                practitioner.createAppointment(booking);
+        assertTrue(appointmentResult.isRight() && appointmentResult.getRight().isPresent());
+    }
+
 
 }

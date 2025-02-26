@@ -1,5 +1,6 @@
 package ca.kittle.clinic.domain;
 
+import ca.kittle.clinic.domain.validation.AppointmentValidationError;
 import ca.kittle.clinic.domain.validation.BookingValidationError;
 import io.jbock.util.Either;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Practitioner {
     private final String phoneNumber;
     private final String email;
 
+    private final List<Appointment> appointments = new ArrayList<>();
     private final List<Booking> bookings = new ArrayList<>();
 
     /**
@@ -60,12 +62,26 @@ public class Practitioner {
         this.email = email;
     }
 
+    
+    /**
+     * Retrieves a list of bookings for the practitioner on a specific date.
+     *
+     * @param forDate The date for which bookings should be retrieved.
+     * @return A list of bookings that match the specified date.
+     */
     public List<Booking> listBookings(LocalDate forDate) {
         return bookings.stream()
                 .filter(b -> b.getDate().isEqual(forDate))
                 .toList();
     }
 
+
+    /**
+     * Cancels an existing booking for this practitioner.
+     *
+     * @param booking The booking to be canceled.
+     * @return {@code true} if the booking was successfully removed, {@code false} if the booking was not found.
+     */
     public boolean cancelBooking(Booking booking) {
         return bookings.remove(booking);
     }
@@ -123,8 +139,33 @@ public class Practitioner {
         return Either.right(booking);
     }
 
-//    public Appointment createAppointment(Booking booking) {
-//
-//    }
+
+    /**
+     * Attempts to create an appointment for a specific booking.
+     * Validates the booking details and handles errors if the appointment cannot be created.
+     *
+     * @param booking The booking that contains details for the appointment.
+     * @return Either<List < AppointmentValidationError>, Appointment> - A list of validation errors if the appointment
+     * cannot be created, or the successfully created Appointment instance.
+     */
+    public Either<List<AppointmentValidationError>, Appointment> createAppointment(Booking booking) {
+        Either<List<AppointmentValidationError>, Appointment> result = Appointment.createAppointment(
+                LocalDateTime.now(),
+                booking.getAppointmentType(),
+                booking.getDate(),
+                booking.getStartTime(),
+                booking.getPatient(),
+                this
+        );
+        if (result.isLeft())
+            return result;
+
+        Appointment appointment = result.getRight().isPresent() ? result.getRight().get() : null;
+        if (appointment == null)
+            return Either.left(List.of(new AppointmentValidationError.CannotCreateAppointmentError()));
+
+        appointments.add(appointment);
+        return Either.right(appointment);
+    }
 
 }
