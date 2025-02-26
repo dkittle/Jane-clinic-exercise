@@ -27,7 +27,7 @@ public class Booking {
     private final Practitioner practitioner;
 
     /**
-     * This constructor is the preferred method for creating a new Booking.
+     * Create a new Booking.
      *
      * @param appointmentType the type of appointment (from the enumerated set)
      * @param date            the date of the booking; must not be null or in the past
@@ -64,6 +64,8 @@ public class Booking {
      * @param startTime        the start time of the booking; must not be null or in the past
      * @param patient          the patient associated with the booking; must not be null
      * @param practitioner     the practitioner associated with the booking; must not be null
+     *
+     * @return Either<List<BookingValidationError>, Booking> a list of validate errors or a Booking
      */
     public static Either<List<BookingValidationError>, Booking> createBooking(
             LocalDateTime earliestDateTime,
@@ -93,7 +95,7 @@ public class Booking {
                 appointmentType != null) {
             LocalTime endTime = startTime.plus(appointmentType.getDuration());
             Optional<List<BookingValidationError>> businessRuleErrors =
-                    validateRuleBookingStartTime(
+                    validateBookingStartDateTimeRules(
                             earliestDateTime,
                             clinicHours,
                             date,
@@ -158,7 +160,7 @@ public class Booking {
      *
      * @return Optional List<BookingValidationError> a list of any errors found
      */
-    private static Optional<List<BookingValidationError>> validateRuleBookingStartTime(
+    private static Optional<List<BookingValidationError>> validateBookingStartDateTimeRules(
             LocalDateTime earliestDateTime,
             ClinicHours clinicHours,
             LocalDate bookingDate,

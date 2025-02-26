@@ -87,8 +87,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when earliest booking date/time is null")
-    void shouldThrowExceptionWhenEarliestDateTimeIsNull() {
+    @DisplayName("Should return an error when earliest booking date/time is null")
+    void shouldReturnAnErrorWhenEarliestDateTimeIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
@@ -114,8 +114,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when clinic hours is null")
-    void shouldThrowExceptionWhenAppointmentClinicHoursIsNull() {
+    @DisplayName("Should return an error when clinic hours is null")
+    void shouldReturnAnErrorWhenAppointmentClinicHoursIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
@@ -141,8 +141,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when appointment type is null")
-    void shouldThrowExceptionWhenAppointmentTypeIsNull() {
+    @DisplayName("Should return an error when appointment type is null")
+    void shouldReturnAnErrorWhenAppointmentTypeIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
@@ -167,8 +167,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when date is null")
-    void shouldThrowExceptionWhenDateIsNull() {
+    @DisplayName("Should return an error when date is null")
+    void shouldReturnAnErrorWhenDateIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
@@ -193,8 +193,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when start time is null")
-    void shouldThrowExceptionWhenStartTimeIsNull() {
+    @DisplayName("Should return an error when start time is null")
+    void shouldReturnAnErrorWhenStartTimeIsNull() {
         Patient patient = patients.get(0);
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
@@ -219,8 +219,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when patient is null")
-    void shouldThrowExceptionWhenPatientIsNull() {
+    @DisplayName("Should return an error when patient is null")
+    void shouldReturnAnErrorWhenPatientIsNull() {
         Practitioner practitioner = TestPractitioner.CHERIA;
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
         ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
@@ -245,8 +245,8 @@ class BookingTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when practitioner is null")
-    void shouldThrowExceptionWhenPractitionerIsNull() {
+    @DisplayName("Should return an error when practitioner is null")
+    void shouldReturnAnErrorWhenPractitionerIsNull() {
         Patient patient = patients.get(0);
         Appointment.AppointmentType type = Appointment.AppointmentType.STANDARD;
         ClinicHours clinicHours = TestClinic.TEST_CLINIC.getHours();
