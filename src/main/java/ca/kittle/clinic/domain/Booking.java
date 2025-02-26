@@ -190,4 +190,23 @@ public class Booking {
             errors.add(new BookingValidationError.OutsideBusinessHoursError());
         return errors.isEmpty() ? Optional.empty() : Optional.of(errors);
     }
+
+    public LocalTime getEndTime() {
+        return this.startTime.plus(this.appointmentType.getDuration());
+    }
+
+    public boolean doesBookingOverlap(List<Booking> otherBookings) {
+        // FIXME should null throw an illegal argument exception?
+        if (otherBookings == null || otherBookings.isEmpty())
+            return false;
+
+        LocalTime myEndTime = this.startTime.plus(this.appointmentType.getDuration());
+
+        // Do any other bookings start before my end time and end after my start time
+        return otherBookings.stream().anyMatch(
+                otherBooking ->
+                        (this.date.isEqual(otherBooking.date) &&
+                                otherBooking.getStartTime().isBefore(myEndTime) &&
+                                otherBooking.getEndTime().isAfter(this.startTime)));
+    }
 }

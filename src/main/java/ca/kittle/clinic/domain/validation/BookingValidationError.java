@@ -2,6 +2,12 @@ package ca.kittle.clinic.domain.validation;
 
 public sealed interface BookingValidationError {
 
+    record CannotCreateBookingError() implements BookingValidationError {
+    }
+
+    record BookingOverlapsAnotherError() implements BookingValidationError {
+    }
+
     record TypeNullError() implements BookingValidationError {
     }
 
